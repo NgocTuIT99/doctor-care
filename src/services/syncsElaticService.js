@@ -3,7 +3,7 @@ require('dotenv').config();
 
 let createPost = (data) => {
     request.post({
-        url: `${process.env.ELASTIC_HOST}/doctorcare_haryphamdev/posts/${data.postId}`,
+        url: `${process.env.ELASTIC_HOST}/doctorcare_ngoctudev/posts/${data.postId}`,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -18,7 +18,7 @@ let createPost = (data) => {
 
 let updatePost = (data) => {
     request.put({
-        url: `${process.env.ELASTIC_HOST}/doctorcare_haryphamdev/posts/${data.postId}`,
+        url: `${process.env.ELASTIC_HOST}/doctorcare_ngoctudev/posts/${data.postId}`,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -33,7 +33,7 @@ let updatePost = (data) => {
 
 let deletePost = (id) => {
     request.delete({
-        url: `${process.env.ELASTIC_HOST}/doctorcare_haryphamdev/posts/${id}`,
+        url: `${process.env.ELASTIC_HOST}/doctorcare_ngoctudev/posts/${id}`,
         headers: {
             'Content-Type': 'application/json',
         },
@@ -48,32 +48,32 @@ let deletePost = (id) => {
 let findPostsByTerm = (keyword) => {
     return new Promise((resolve, reject) => {
         let query =
-            {
-                "query": {
-                    "multi_match": {
-                        "query": `${keyword}`,
-                        "type": "most_fields",
-                        "fields": [ "title", "content" ]
-                    }
-                },
-                "highlight": {
-                    "pre_tags": [ "<strong>" ],
-                    "post_tags": [ "</strong>" ],
-                    "fields": {
-                        "title": {
-                            "fragment_size": 200,
-                            "number_of_fragments": 1
-                        },
-                        "content": {
-                            "fragment_size": 200,
-                            "number_of_fragments": 1
-                        }
+        {
+            "query": {
+                "multi_match": {
+                    "query": `${keyword}`,
+                    "type": "most_fields",
+                    "fields": ["title", "content"]
+                }
+            },
+            "highlight": {
+                "pre_tags": ["<strong>"],
+                "post_tags": ["</strong>"],
+                "fields": {
+                    "title": {
+                        "fragment_size": 200,
+                        "number_of_fragments": 1
+                    },
+                    "content": {
+                        "fragment_size": 200,
+                        "number_of_fragments": 1
                     }
                 }
-            };
+            }
+        };
 
         request.get({
-            url: `${process.env.ELASTIC_HOST}/doctorcare_haryphamdev/posts/_search`,
+            url: `${process.env.ELASTIC_HOST}/doctorcare_ngoctudev/posts/_search`,
             headers: {
                 'Content-Type': 'application/json',
             },
